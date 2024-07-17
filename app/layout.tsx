@@ -1,8 +1,11 @@
 import type { Metadata } from "next";
 import { Montserrat } from "next/font/google";
-import "./ui/globals.css";
+import "@/app/ui/globals.css";
+import Sidebar from "@/app/ui/home/sidebar";
+import { UserProvider } from "@/hooks/useUser";
+import ModalProvider from "@/providers/modal-provider";
 
-const montserrat = Montserrat({ subsets: ["latin"] });
+const montserrat = Montserrat({ subsets: ["latin"], weight: "500" });
 
 export const metadata: Metadata = {
   title: "SoundCloud",
@@ -16,7 +19,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={montserrat.className}>{children}</body>
+      <body className={montserrat.className}>
+        <UserProvider>
+          <ModalProvider />
+          <Sidebar>
+            {children}
+          </Sidebar>
+        </UserProvider>
+      </body>
     </html>
   );
 }

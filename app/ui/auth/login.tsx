@@ -1,12 +1,18 @@
 "use client";
 
-import SoundCloudLogo from "@/app/ui/soundcloud-logo";
-import Link from "next/link";
 import { signIn } from "@/auth";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import useAuthModal from "@/hooks/useAuthModel";
+import { getUser } from "@/app/lib/actions";
+import { useUser } from "@/hooks/useUser";
 
-export default function Page() {
+export default function Login() {
+  // auth modal
+  const { onOpen, onClose } = useAuthModal();
+
+  // user context
+  const { setUser } = useUser();
+
   // email state
   const [email, setEmail] = useState<string>("");
 
@@ -15,9 +21,6 @@ export default function Page() {
 
   // error state
   const [error, setError] = useState<string>("");
-
-  // router
-  const router = useRouter();
 
   // submit handler
   const handleSubmit = async(e: React.FormEvent) => {
@@ -30,8 +33,22 @@ export default function Page() {
       // store token to the local storage
       localStorage.setItem("token", response.data.token);
 
-      // redirect to the home page
-      router.push("/");
+      const token = response.data.token;
+      const id = response.data._id;
+
+      const fetchUser = async () => {
+        try {
+          const response = await getUser(id, token);
+          setUser(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      fetchUser();
+
+      // close the modal
+      onClose();
     } catch (error : any) {
       console.error(error);
       setError(error.response.data);
@@ -39,23 +56,9 @@ export default function Page() {
   }
 
   return (
-    <section className="min-h-screen flex flex-col justify-center items-center pt-20 pb-20 pl-5 pr-5">
-      {/* logo */}
-      <SoundCloudLogo />
-
-      <h3 className="
-        mt-12
-        text-4xl
-        font-bold
-        text-center
-        text-white
-      ">
-        Sign in to SoundCloud
-      </h3>
-
+    <>
       {/* form */}
       <form className="
-        mt-8
         flex
         flex-col
         gap-4
@@ -68,8 +71,8 @@ export default function Page() {
           type="email"
           placeholder="Email"
           className="
-            px-5
-            py-4
+            px-4
+            py-2
             rounded
             bg-gray-800
             text-white
@@ -84,8 +87,8 @@ export default function Page() {
           type="password"
           placeholder="Password"
           className="
-            px-5
-            py-4
+            px-4
+            py-2
             rounded
             bg-gray-800
             text-white
@@ -99,8 +102,8 @@ export default function Page() {
         <button
           type="submit"
           className="
-            px-5
-            py-4
+            px-4
+            py-2
             rounded
             bg-orange-500
             text-white
@@ -114,8 +117,8 @@ export default function Page() {
         {/* error message */}
         {error !== "" && <p className="bg-white rounded py-2 text-red-500 text-center">{error}</p>}
 
-        <p className="text-center text-lg">Don't have an account? <Link className="text-blue-600 underline hover:no-underline" href={"/auth/signup"}>Sign Up</Link></p>
+        <p className="text-center text-lg">Don't have an account? <button onClick={() => onOpen("register")} className="text-blue-600 underline hover:no-underline">Sign Up</button></p>
       </form>
-    </section>
+    </>
   );
 }

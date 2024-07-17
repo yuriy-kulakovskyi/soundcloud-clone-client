@@ -3,7 +3,8 @@ import axios, { AxiosResponse } from 'axios';
 interface User {
   _id: string;
   name: string;
-  // додайте інші поля користувача за потреби
+  email: string;
+  avatar?: string;
 }
 
 export const getUser = async (_id: string, token: string): Promise<AxiosResponse<User>> => {
