@@ -49,7 +49,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
         <img
           src={imageUrl}
           alt="Media item"
-          className="object-cover w-full h-full"
+          className="object-cover"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">

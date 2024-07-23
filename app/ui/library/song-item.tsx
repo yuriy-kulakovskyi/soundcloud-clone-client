@@ -63,7 +63,7 @@ const SongItem: React.FC<SongItemProps> = ({
       >
         {data.image && (
           <img
-            className="object-cover w-full h-full"
+            className="object-cover"
             src={imageUrl}
             alt="Image"
           />
