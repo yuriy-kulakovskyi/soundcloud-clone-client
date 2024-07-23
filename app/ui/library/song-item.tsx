@@ -33,7 +33,7 @@ const SongItem: React.FC<SongItemProps> = ({
     }
 
     fetchUploader();
-  }, []);
+  }, [data]);
   
   return ( 
     <li

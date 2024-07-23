@@ -120,7 +120,7 @@ export default function Login() {
         {/* error message */}
         {error !== "" && <p className="bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
 
-        <p className="text-center text-lg">Don't have an account? <button onClick={() => onOpen("register")} className="text-blue-600 underline hover:no-underline">Sign Up</button></p>
+        <p className="text-center text-lg">Don&apos;t have an account? <button onClick={() => onOpen("register")} className="text-blue-600 underline hover:no-underline">Sign Up</button></p>
       </form>
     </>
   );
