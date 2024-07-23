@@ -85,9 +85,9 @@ const SongItem: React.FC<SongItemProps> = ({
         ">
           By {data.author}
         </p>
-        {loading ? <UploaderSkeleton /> : <p>
+        <p>
           {uploader && uploader.name}
-        </p>}
+        </p>
       </div>
       <div className="
         absolute
