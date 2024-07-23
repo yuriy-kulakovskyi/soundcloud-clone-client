@@ -21,13 +21,15 @@ const Library = () => {
 
   useEffect(() => {
     const fetchUserSongs = async () => {
-      try {
-        const response = await getSongsByUserId(user?._id);
-        setUserSongs(response);
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
+      if (user) {
+        try {
+          const response = await getSongsByUserId(user?._id);
+          setUserSongs(response);
+        } catch (error) {
+          console.error(error);
+        } finally {
+          setLoading(false);
+        }
       }
     };
 
