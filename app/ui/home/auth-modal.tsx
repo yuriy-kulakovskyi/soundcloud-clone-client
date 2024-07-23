@@ -1,14 +1,11 @@
 "use client";
 
-import useAuthModal from "@/hooks/useAuthModel";
+import useAuthModal from "@/hooks/useAuthModal";
 import Login from "../auth/login";
 import Modal from "./modal";
-import { useRouter } from "next/navigation";
 import Signup from "../auth/signup";
 
 const AuthModal = () => {
-  const router = useRouter();
-
   const { onClose, isOpen, page } = useAuthModal();
 
   const onChange = (open: boolean) => {

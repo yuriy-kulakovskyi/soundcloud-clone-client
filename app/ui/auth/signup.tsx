@@ -1,10 +1,12 @@
 "use client";
 
 import { signUp } from "@/auth";
-import useAuthModal from "@/hooks/useAuthModel";
+import useAuthModal from "@/hooks/useAuthModal";
 import { useState } from "react";
 import { useUser } from "@/hooks/useUser";
-import { getUser } from "@/app/lib/actions";
+import { getUser } from "@/app/lib/data";
+import Button from "../home/button";
+import { toast } from "react-hot-toast";
 
 interface FormData {
   name: string;
@@ -81,6 +83,7 @@ export default function Signup() {
         try {
           const response = await getUser(id, token);
           setUser(response.data);
+          toast.success("Registered successfully");
         } catch (error) {
           console.error(error);
         }
@@ -94,7 +97,7 @@ export default function Signup() {
       console.error(error);
       setError(error.response.data);
     }
-  }
+  }  
 
   return (
     <>
@@ -114,7 +117,7 @@ export default function Signup() {
             w-24
             h-24
             rounded-full
-            bg-gray-800
+            bg-neutral-700
             flex
             items-center
             justify-center
@@ -123,6 +126,7 @@ export default function Signup() {
             cursor-pointer
             hover:bg-gray-700
             relative
+            focus:outline-none
           "
           style={{
             backgroundImage: avatarPreview ? `url(${avatarPreview})` : 'none',
@@ -133,6 +137,7 @@ export default function Signup() {
           {/* input avatar */}
           <input
             type="file"
+            accept="image/*"
             name="avatar"
             id="avatar"
             className="
@@ -151,14 +156,17 @@ export default function Signup() {
           name="name"
           placeholder="Name"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={formData.name}
           onChange={handleChange}
@@ -168,14 +176,17 @@ export default function Signup() {
           name="email"
           placeholder="Email"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={formData.email}
           onChange={handleChange}
@@ -185,14 +196,17 @@ export default function Signup() {
           name="password"
           placeholder="Password"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={formData.password}
           onChange={handleChange}
@@ -202,36 +216,30 @@ export default function Signup() {
           name="confirmPassword"
           placeholder="Repeat Password"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={formData.confirmPassword}
           onChange={handleChange}
         />
-        <button
+        <Button
           type="submit"
-          className="
-            w-full
-            px-4
-            py-2
-            rounded
-            bg-orange-500
-            text-white
-            font-bold
-            hover:bg-orange-600
-          "
+          className="text-white"
         >
           Sign up
-        </button>
+        </Button>
 
         {/* error message */}
-        {error !== "" && <p className="bg-white rounded py-2 text-red-500 text-center">{error}</p>}
+        {error !== "" && <p className="bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
 
         <p className="text-center text-lg">Already have an account? <button onClick={() => onOpen("login")} className="text-blue-600 underline hover:no-underline">Sign In</button></p>
       </form>

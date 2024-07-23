@@ -2,9 +2,11 @@
 
 import { signIn } from "@/auth";
 import { useState } from "react";
-import useAuthModal from "@/hooks/useAuthModel";
-import { getUser } from "@/app/lib/actions";
+import useAuthModal from "@/hooks/useAuthModal";
+import { getUser } from "@/app/lib/data";
 import { useUser } from "@/hooks/useUser";
+import Button from "../home/button";
+import { toast } from "react-hot-toast";
 
 export default function Login() {
   // auth modal
@@ -40,6 +42,7 @@ export default function Login() {
         try {
           const response = await getUser(id, token);
           setUser(response.data);
+          toast.success("Logined successfully");
         } catch (error) {
           console.error(error);
         }
@@ -71,14 +74,17 @@ export default function Login() {
           type="email"
           placeholder="Email"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -87,35 +93,32 @@ export default function Login() {
           type="password"
           placeholder="Password"
           className="
-            px-4
-            py-2
-            rounded
-            bg-gray-800
-            text-white
-            placeholder-gray-400
-            focus: outline-none
-            text-2xl
+            flex
+            w-full
+            rounded-md
+            bg-neutral-700
+            border
+            border-transparent
+            px-3
+            py-3
+            text-lg
+            disabled: opacity-90
+            focus:outline-none
           "
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button
+        <Button
           type="submit"
           className="
-            px-4
-            py-2
-            rounded
-            bg-orange-500
             text-white
-            font-bold
-            hover:bg-orange-600
           "
         >
           Sign in
-        </button>
+        </Button>
 
         {/* error message */}
-        {error !== "" && <p className="bg-white rounded py-2 text-red-500 text-center">{error}</p>}
+        {error !== "" && <p className="bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
 
         <p className="text-center text-lg">Don't have an account? <button onClick={() => onOpen("register")} className="text-blue-600 underline hover:no-underline">Sign Up</button></p>
       </form>

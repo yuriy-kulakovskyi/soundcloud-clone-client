@@ -6,10 +6,12 @@ import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
 import { HiHome } from "react-icons/hi";
 import { BiSearch } from "react-icons/bi";
 import Button from "@/app/ui/home/button";
-import useAuthModal from "@/hooks/useAuthModel";
+import useAuthModal from "@/hooks/useAuthModal";
 import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
 import clsx from "clsx";
+import toast, { Toaster } from "react-hot-toast";
+import { ProfileSkeleton } from "../skeletons";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -22,16 +24,24 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const authModal = useAuthModal();
   const router = useRouter();
-  const { user, setUser } = useUser();
+  const { user, setUser, isLoading } = useUser();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
     setUser(null);
+
+    // show success message
+    toast.success("Logged out successfully");
+
     router.refresh();
   }
 
+  if (isLoading) {
+    return <ProfileSkeleton />;
+  }
+
   return (
-    <div
+    <header
       className={twMerge(`
         h-fit
         bg-gradient-to-b
@@ -40,6 +50,11 @@ const Header: React.FC<HeaderProps> = ({
       `,
         className)}
     >
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+
       <div
         className="
           w-full
@@ -88,7 +103,9 @@ const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
         <div className="flex md:hidden gap-x-2 items-center">
-          <button className="
+          <button
+            onClick={() => router.push("/")}
+            className="
               rounded-full
               p-2
               bg-white
@@ -101,7 +118,9 @@ const Header: React.FC<HeaderProps> = ({
           >
             <HiHome className="text-black" size={20} />
           </button>
-          <button className="
+          <button
+            onClick={() => router.push("/search")}
+            className="
               rounded-full
               p-2
               bg-white
@@ -121,70 +140,70 @@ const Header: React.FC<HeaderProps> = ({
           items-center
           gap-x-4
         ">
-          {user ? (
-            <div className="flex gap-x-4 items-center">
-              <Button
-                onClick={handleLogout}
-                className="
-                  bg-white px-6 py-2
-                "
-              >
-                Logout
-              </Button>
-              <Button onClick={() => router.push("/account")}
-                className={clsx("border-none", !user.avatar &&"bg-white", user.avatar && "p-0")}
-              >
-                {!user.avatar ?
-                  <FaUserAlt /> :
-                  <div className="
-                    w-[40px]
-                    h-[40px]
-                    bg-cover
-                    bg-center
-                    rounded-full
+            {user ? (
+              <div className="flex gap-x-4 items-center">
+                <Button
+                  onClick={handleLogout}
+                  className="
+                    bg-white px-6 py-2
+                  "
+                >
+                  Logout
+                </Button>
+                <Button onClick={() => router.push("/account")}
+                  className={clsx("border-none", !user.avatar && "bg-white", user.avatar && "p-0")}
+                >
+                  {!user.avatar ?
+                    <FaUserAlt /> :
+                    <div className="
+                      w-[40px]
+                      h-[40px]
+                      bg-cover
+                      bg-center
+                      rounded-full
                     "
-                    style={{
-                      backgroundImage: `url(${process.env.NEXT_PUBLIC_SERVER_URL + user?.avatar})`
-                    }}
+                      style={{
+                        backgroundImage: `url(${process.env.NEXT_PUBLIC_SERVER_URL + user?.avatar})`
+                      }}
+                    >
+                    </div>
+                  }
+                </Button>
+              </div>
+            ) : (
+              <>
+                <div>
+                  <Button
+                    onClick={() => authModal.onOpen("register")}
+
+                    className="
+                    bg-transparent
+                    text-neutral-300
+                    font-medium
+                  "
                   >
-                  </div>
-                }
-              </Button>
-            </div>
-          ) : (
-            <>
-              <div>
-                <Button
-                  onClick={() => authModal.onOpen("register")}
+                    Sign Up
+                  </Button>
+                </div>
+                <div>
+                  <Button
+                    onClick={() => authModal.onOpen("login")}
 
-                  className="
-                  bg-transparent
-                  text-neutral-300
-                  font-medium
-                "
-                >
-                  Sign Up
-                </Button>
-              </div>
-              <div>
-                <Button
-                  onClick={() => authModal.onOpen("login")}
-
-                  className="
-                  bg-white
-                  px-6
-                  py-2
-                "
-                >
-                  Log In
-                </Button>
-              </div>
-            </>
-          )}
+                    className="
+                    bg-white
+                    px-6
+                    py-2
+                  "
+                  >
+                    Log In
+                  </Button>
+                </div>
+              </>
+            )}
         </div>
       </div>
       {children}
-    </div >
+    </header>
   )
 }
 

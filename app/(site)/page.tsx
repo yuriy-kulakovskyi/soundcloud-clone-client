@@ -1,15 +1,16 @@
-"use client";
-
 import Header from "@/app/ui/home/header";
 import ListItem from "@/app/ui/home/list-item";
+import { Toaster } from "react-hot-toast";
+import { getSongs } from "@/app/lib/data";
+import PageContent from "@/app/ui/library/page-content";
 
-interface HomeProps {
-  children: React.ReactNode;
-}
+export const revalidate = 0;
 
-const Home: React.FC<HomeProps> = ({ children }) => {  
+export default async function Home() {
+  const songs = await getSongs();
+
   return (
-    <div className="
+    <section className="
       bg-neutral-900
       rounded-lg
       h-screen
@@ -17,6 +18,11 @@ const Home: React.FC<HomeProps> = ({ children }) => {
       overflow-hidden
       overflow-y-auto
     ">
+      <Toaster
+        position="top-center"
+        reverseOrder={false}
+      />
+
       <Header>
         <div className="mb-2">
           <h1
@@ -51,12 +57,10 @@ const Home: React.FC<HomeProps> = ({ children }) => {
             Newest songs
           </h1>
         </div>
-        <div>
-          List of Songs
-        </div>
+        <PageContent
+          songs={songs}
+        />
       </div>
-    </div>
+    </section>
   );
 };
-
-export default Home;

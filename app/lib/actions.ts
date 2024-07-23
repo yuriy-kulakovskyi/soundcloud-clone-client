@@ -1,23 +1,25 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 
-interface User {
-  _id: string;
-  name: string;
-  email: string;
-  avatar?: string;
+export const uploadSong = async (data: FormData) => {
+  try {
+    return await axios.post(`http://localhost:4000/api/songs/add`, data);
+  } catch (error) {
+    throw error;
+  }
 }
 
-export const getUser = async (_id: string, token: string): Promise<AxiosResponse<User>> => {
-  if (token) {
-    try {
-      return await axios.get<User>(`http://localhost:4000/api/users/find/${_id}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-    } catch (error) {
-      throw error;
-    }
+export const like = async (userId: string, songId: string) => {
+  try {
+    return await axios.post(`http://localhost:4000/api/users/${userId}/like/${songId}`);
+  } catch (error) {
+    throw error;
   }
-  throw new Error("Token is missing");
+}
+
+export const dislike = async (userId: string, songId: string) => {
+  try {
+    return await axios.post(`http://localhost:4000/api/users/${userId}/dislike/${songId}`);
+  } catch (error) {
+    throw error;
+  }
 }

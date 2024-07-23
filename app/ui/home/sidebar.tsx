@@ -8,13 +8,18 @@ import { BiSearch } from "react-icons/bi";
 import Box from "@/app/ui/home/box";
 import SidebarItem from "@/app/ui/home/sidebar-item";
 import Library from "@/app/ui/home/library";
+import usePlayer from "@/hooks/usePlayer";
+import { twMerge } from "tailwind-merge";
 
 interface SidebarProps {
   children: React.ReactNode;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ children }) => {
+const Sidebar: React.FC<SidebarProps> = ({ 
+  children
+}) => {
   const pathname = usePathname();
+  const player = usePlayer();
 
   const routes = useMemo(() => [
     {
@@ -32,7 +37,12 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
   ], [pathname]);
 
   return (
-    <div className="flex h-full">
+    <div className={twMerge(`
+      flex
+      h-full
+    `,
+    player.activeId && "h-[calc(100%-80px)]"
+    )}>
       <div 
         className="
           hidden
@@ -66,7 +76,7 @@ const Sidebar: React.FC<SidebarProps> = ({ children }) => {
               }
            </div>
         </Box>
-        <Box className="overflow-y-auto h-screen">
+        <Box className="overflow-y-auto min-h-[86vh]">
           <Library />
         </Box>
       </div>

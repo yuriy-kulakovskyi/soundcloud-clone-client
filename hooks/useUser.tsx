@@ -2,19 +2,20 @@
 
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
 import { redirect } from "next/navigation";
-import { getUser } from "@/app/lib/actions";
+import { getUser } from "@/app/lib/data";
 import { jwtDecode } from "jwt-decode";
 
 interface User {
   _id: string;
   name: string;
   email: string;
-  avatar?: string;
+  avatar?: string
 }
 
 interface UserContextType {
   user: User | null;
   setUser: React.Dispatch<React.SetStateAction<User | null>>;
+  isLoading: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -61,7 +62,7 @@ export const UserProvider = ({ children }: UserProviderProps): JSX.Element => {
   }, [redirect]);
 
   return (
-    <UserContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={{ user, setUser, isLoading }}>
       {children}
     </UserContext.Provider>
   );

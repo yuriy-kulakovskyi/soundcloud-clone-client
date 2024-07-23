@@ -1,12 +1,6 @@
 // axios
 import axios from 'axios';
 
-// user context
-import { useUser } from './hooks/useUser';
-
-// useRouter
-import { useRouter } from 'next/navigation';
-
 export const signIn = async(email: string, password: string) => {
   try {
     return await axios.post('http://localhost:4000/api/users/login', {
