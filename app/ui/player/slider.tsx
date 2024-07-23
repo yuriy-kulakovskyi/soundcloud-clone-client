@@ -26,6 +26,7 @@ const Slider: React.FC<SliderProps> = ({
         w-full
         h-10
         min-w-20
+        cursor-pointer
       "
       defaultValue={[1]}
       value={[value]}

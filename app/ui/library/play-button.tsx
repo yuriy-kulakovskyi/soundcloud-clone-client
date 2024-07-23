@@ -4,7 +4,7 @@ const PlayButton = () => {
   return ( 
     <button className="
       transition
-      opacity-o
+      opacity-0
       rounded-full
       flex
       items-center
