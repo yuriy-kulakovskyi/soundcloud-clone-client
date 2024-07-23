@@ -5,7 +5,6 @@ import { Song } from "@/app/lib/definitions";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import PlayButton from "./play-button";
-import { UploaderSkeleton } from "../skeletons";
 
 interface SongItemProps {
   data: Song;
@@ -16,26 +15,24 @@ const SongItem: React.FC<SongItemProps> = ({
   data,
   onClick
 }) => {
-  const [uploader, setUploader] = useState<any>(null)
-  const [loading, setLoading] = useState<boolean>(true);
+  const [uploader, setUploader] = useState<any>(null);
 
   useEffect(() => {
     const fetchUploader = async () => {
       try {
         const uploader = await getUserWithoutToken(data.uploader);
         setUploader(uploader.data);
-        setLoading(false);
       } catch (err) {
         console.error(err);
-      } finally {
-        setLoading(false);
       }
-    }
+    };
 
     fetchUploader();
-  }, [data]);
-  
-  return ( 
+  }, [data.uploader]);
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${encodeURIComponent(data.image)}`;
+
+  return (
     <li
       onClick={() => onClick(data._id)}
       className="
@@ -65,12 +62,15 @@ const SongItem: React.FC<SongItemProps> = ({
           overflow-hidden
         "
       >
-        <Image
-          className="object-cover"
-          src={process.env.NEXT_PUBLIC_SERVER_URL + data.image}
-          fill
-          alt="Image"
-        />
+        {data.image && (
+          <Image
+            className="object-cover"
+            src={imageUrl}
+            fill
+            alt="Image"
+            priority 
+          />
+        )}
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
         <p className="font-semibold truncate w-full">
@@ -99,5 +99,5 @@ const SongItem: React.FC<SongItemProps> = ({
     </li>
   );
 }
- 
+
 export default SongItem;

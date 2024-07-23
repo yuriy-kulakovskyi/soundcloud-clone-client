@@ -1,7 +1,6 @@
 import { getSongs } from "@/app/lib/data";
 import Header from "@/app/ui/home/header";
 import SearchInput from "@/app/ui/search/search-input";
-import SearchContent from "@/app/ui/search/search-content";
 import SearchLoader from "../ui/search/search-loader";
 
 interface SearchProps {

@@ -21,6 +21,8 @@ const MediaItem: React.FC<MediaItemProps> = ({
 
     return player.setId(data._id);
   }
+
+  const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${encodeURIComponent(data.image)}`;
   
   return ( 
     <li
@@ -47,7 +49,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
       >
         <Image
           fill
-          src={process.env.NEXT_PUBLIC_SERVER_URL + data.image}
+          src={imageUrl}
           alt="Media item"
           className="object-cover"
         />
