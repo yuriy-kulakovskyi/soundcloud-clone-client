@@ -20,7 +20,7 @@ const LikedContent = () => {
       if (user) {
         try {
           const response = await getLikedSongsByUserId(user._id);
-          setSongs(response);
+          setSongs(Array.isArray(response) ? response : [response]);
         } catch (err) {
           console.error(err);
         }
