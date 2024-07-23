@@ -114,7 +114,7 @@ const UploadModal = () => {
       // close modal
       uploadModal.onClose();
 
-      // redirect to home
+      // refresh
       router.refresh();
     } catch (err) {
       toast.error("Something went wrong")
