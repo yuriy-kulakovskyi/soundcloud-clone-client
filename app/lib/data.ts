@@ -11,7 +11,7 @@ export const getUser = async (_id: string, token: string): Promise<AxiosResponse
   
   if (token) {
     try {
-      return await axios.get<User>(`http://localhost:4000/api/users/find/${_id}`, {
+      return await axios.get<User>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/find/${_id}`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -27,7 +27,7 @@ export const getUserWithoutToken = async (_id: string): Promise<AxiosResponse<Us
   noStore();
 
   try {
-    return await axios.get<User>(`http://localhost:4000/api/users/get/${_id}`);
+    return await axios.get<User>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/get/${_id}`);
   } catch (error) {
     throw error;
   }
@@ -38,7 +38,7 @@ export const getSongs = async (query?: string): Promise<Song[]> => {
   noStore();
 
   try {
-    const response = await axios.get<Song[]>(`http://localhost:4000/api/songs?search=${encodeURIComponent(query || "")}`);
+    const response = await axios.get<Song[]>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/songs?search=${encodeURIComponent(query || "")}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -49,7 +49,7 @@ export const getSongsByUserId = async (userId: string): Promise<Song[]> => {
   noStore();
 
   try {
-    const response = await axios.get<Song[]>(`http://localhost:4000/api/songs/${userId}`);
+    const response = await axios.get<Song[]>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/songs/${userId}`);
     return response.data;
   } catch (error) {
     throw error;
@@ -60,7 +60,7 @@ export const getLikedSongsByUserId = async (userId: string): Promise<Song> => {
   noStore();
 
   try {
-    const response = await axios.get<Song>(`http://localhost:4000/api/users/${userId}/likedSongs/`);
+    const response = await axios.get<Song>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${userId}/likedSongs/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -71,7 +71,7 @@ export const getSongById = async (songId: string): Promise<Song> => {
   noStore();
 
   try {
-    const response = await axios.get<Song>(`http://localhost:4000/api/songs/get/${songId}`);
+    const response = await axios.get<Song>(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/songs/get/${songId}`);
     return response.data;
   } catch (error) {
     throw error;
