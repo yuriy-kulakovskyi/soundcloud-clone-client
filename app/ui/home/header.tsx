@@ -161,7 +161,6 @@ const Header: React.FC<HeaderProps> = ({
                         backgroundImage: `url(${process.env.NEXT_PUBLIC_SERVER_URL + user?.avatar})`
                       }}
                     >
-                    <img src={process.env.NEXT_PUBLIC_SERVER_URL + user?.avatar} className="rounded-full" alt="avatar" />
                     </div>
                   }
                 </Button>
