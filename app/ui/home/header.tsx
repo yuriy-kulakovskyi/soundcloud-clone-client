@@ -11,7 +11,6 @@ import { useUser } from "@/hooks/useUser";
 import { FaUserAlt } from "react-icons/fa";
 import clsx from "clsx";
 import toast, { Toaster } from "react-hot-toast";
-import { ProfileSkeleton } from "../skeletons";
 
 interface HeaderProps {
   children: React.ReactNode;
@@ -24,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({
 }) => {
   const authModal = useAuthModal();
   const router = useRouter();
-  const { user, setUser, isLoading } = useUser();
+  const { user, setUser } = useUser();
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -34,10 +33,6 @@ const Header: React.FC<HeaderProps> = ({
     toast.success("Logged out successfully");
 
     router.refresh();
-  }
-
-  if (isLoading) {
-    return <ProfileSkeleton />;
   }
 
   return (

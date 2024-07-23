@@ -101,20 +101,3 @@ export function PageContentSkeleton() {
     </ul>
   );
 }
-
-export function ProfileSkeleton() {
-  return (
-    <div className="animate-pulse">
-      <div className="flex justify-between items-center p-6 bg-gradient-to-b from-orange-800">
-        <div className="flex gap-x-2 items-center">
-          <div className="w-10 h-10 bg-neutral-700 rounded-full"></div>
-          <div className="w-10 h-10 bg-neutral-700 rounded-full"></div>
-        </div>
-        <div className="flex gap-x-2 items-center">
-          <div className="w-10 h-10 bg-neutral-700 rounded-full"></div>
-          <div className="w-10 h-10 bg-neutral-700 rounded-full"></div>
-        </div>
-      </div>
-    </div>
-  );
-}
