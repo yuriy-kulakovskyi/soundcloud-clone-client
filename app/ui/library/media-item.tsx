@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-
 import { Song } from "@/app/lib/definitions";
 import usePlayer from "@/hooks/usePlayer";
+
 interface MediaItemProps {
   data: Song;
   onClick?: (id: string) => void;
@@ -16,15 +16,15 @@ const MediaItem: React.FC<MediaItemProps> = ({
   const player = usePlayer();
   const handleClick = () => {
     if (onClick) {
-      return onClick(data._id)
+      return onClick(data._id);
     }
 
     return player.setId(data._id);
   }
 
-  const imageUrl = `${encodeURIComponent(process.env.NEXT_PUBLIC_SERVER_URL + data.image)}`;
-  
-  return ( 
+  const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${data.image}`;
+
+  return (
     <li
       onClick={handleClick}
       className="
@@ -69,5 +69,5 @@ const MediaItem: React.FC<MediaItemProps> = ({
     </li>
   );
 }
- 
+
 export default MediaItem;

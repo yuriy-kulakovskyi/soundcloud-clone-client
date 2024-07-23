@@ -30,7 +30,7 @@ const SongItem: React.FC<SongItemProps> = ({
     fetchUploader();
   }, [data.uploader]);
 
-  const imageUrl = `${encodeURIComponent(process.env.NEXT_PUBLIC_SERVER_URL + data.image)}`;
+  const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${data.image}`;
 
   return (
     <li
@@ -68,7 +68,6 @@ const SongItem: React.FC<SongItemProps> = ({
             src={imageUrl}
             fill
             alt="Image"
-            priority 
           />
         )}
       </div>
