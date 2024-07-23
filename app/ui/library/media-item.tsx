@@ -22,7 +22,7 @@ const MediaItem: React.FC<MediaItemProps> = ({
     return player.setId(data._id);
   }
 
-  const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${encodeURIComponent(data.image)}`;
+  const imageUrl = `${encodeURIComponent(process.env.NEXT_PUBLIC_SERVER_URL + data.image)}`;
   
   return ( 
     <li
