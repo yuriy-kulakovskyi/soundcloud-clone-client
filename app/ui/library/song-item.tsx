@@ -4,6 +4,7 @@ import { getUserWithoutToken } from "@/app/lib/data";
 import { Song } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import PlayButton from "./play-button";
+import Image from "next/image";
 
 interface SongItemProps {
   data: Song;
@@ -62,8 +63,9 @@ const SongItem: React.FC<SongItemProps> = ({
         "
       >
         {data.image && (
-          <img
-            className="object-cover absolute w-full h-full"
+          <Image
+            fill
+            className="object-cover"
             src={imageUrl}
             alt="Image"
           />

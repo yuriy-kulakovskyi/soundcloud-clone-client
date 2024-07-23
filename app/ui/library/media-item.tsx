@@ -2,6 +2,7 @@
 
 import { Song } from "@/app/lib/definitions";
 import usePlayer from "@/hooks/usePlayer";
+import Image from "next/image";
 
 interface MediaItemProps {
   data: Song;
@@ -46,10 +47,11 @@ const MediaItem: React.FC<MediaItemProps> = ({
           overflow-hidden
         "
       >
-        <img
+        <Image
+          fill
           src={imageUrl}
           alt="Media item"
-          className="object-cover absolute w-full h-full"
+          className="object-cover"
         />
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
