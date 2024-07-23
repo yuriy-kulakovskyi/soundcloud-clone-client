@@ -11,14 +11,14 @@ interface SearchLoaderProps {
 }
 
 const SearchLoader = ({ title }: SearchLoaderProps) => {
-  const [songs, setSongs] = useState<Song | null>(null);
+  const [songs, setSongs] = useState<Song | null>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSongs = async () => {
       try {
         const response = await getSongs(title);
-        setSongs(response);
+        setSongs(response.length > 0 ? response[0] : null);
       } catch (error) {
         console.error(error);
       } finally {
