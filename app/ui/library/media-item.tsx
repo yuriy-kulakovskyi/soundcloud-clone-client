@@ -23,7 +23,8 @@ const MediaItem: React.FC<MediaItemProps> = ({
   }
 
   const imageUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}${data.image}`;
-
+  console.log(imageUrl);
+  
   return (
     <li
       onClick={handleClick}
