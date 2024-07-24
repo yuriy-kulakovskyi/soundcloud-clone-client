@@ -108,6 +108,9 @@ const UploadModal = () => {
         image: null
       });
 
+      // clear avatar preview
+      setAvatarPreview(null);
+
       // toast
       toast.success("Song uploaded successfully");
 

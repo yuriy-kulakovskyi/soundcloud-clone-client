@@ -7,6 +7,7 @@ import { getUser } from "@/app/lib/data";
 import { useUser } from "@/hooks/useUser";
 import Button from "../home/button";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   // auth modal
@@ -23,6 +24,9 @@ export default function Login() {
 
   // error state
   const [error, setError] = useState<string>("");
+
+  // router
+  const router = useRouter();
 
   // submit handler
   const handleSubmit = async(e: React.FormEvent) => {
@@ -52,6 +56,13 @@ export default function Login() {
 
       // close the modal
       onClose();
+
+      // reset the form
+      setEmail("");
+      setPassword("");
+
+      // refresh
+      router.refresh();
     } catch (error : any) {
       console.error(error);
       setError(error.response.data);
@@ -118,7 +129,7 @@ export default function Login() {
         </Button>
 
         {/* error message */}
-        {error !== "" && <p className="bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
+        {error !== "" && <p className="w-full bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
 
         <p className="text-center text-lg">Don&apos;t have an account? <button onClick={() => onOpen("register")} className="text-blue-600 underline hover:no-underline">Sign Up</button></p>
       </form>

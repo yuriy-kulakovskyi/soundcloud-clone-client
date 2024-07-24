@@ -7,6 +7,7 @@ import { useUser } from "@/hooks/useUser";
 import { getUser } from "@/app/lib/data";
 import Button from "../home/button";
 import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface FormData {
   name: string;
@@ -37,6 +38,9 @@ export default function Signup() {
 
   // avatar preview state
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+
+  // router
+  const router = useRouter();
 
   // handle change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -93,6 +97,18 @@ export default function Signup() {
 
       // close the modal
       onClose();
+
+      // reset the form
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        avatar: null,
+      });
+
+      // refresh
+      router.refresh();
     } catch (error: any) {
       console.error(error);
       setError(error.response.data);
@@ -239,7 +255,7 @@ export default function Signup() {
         </Button>
 
         {/* error message */}
-        {error !== "" && <p className="bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
+        {error !== "" && <p className="w-full bg-white rounded-full py-2 text-red-500 text-center">{error}</p>}
 
         <p className="text-center text-lg">Already have an account? <button onClick={() => onOpen("login")} className="text-blue-600 underline hover:no-underline">Sign In</button></p>
       </form>
