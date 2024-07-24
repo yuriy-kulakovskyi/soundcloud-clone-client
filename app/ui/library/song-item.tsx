@@ -5,6 +5,7 @@ import { Song } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import PlayButton from "./play-button";
 import SoundCloudLogo from "../soundcloud-logo";
+import ImageWithFallback from "./image-fallback";
 
 interface SongItemProps {
   data: Song;
@@ -62,16 +63,12 @@ const SongItem: React.FC<SongItemProps> = ({
           overflow-hidden
         "
       >
-        {data.image ? (
-          <img
-            className="object-cover absolute w-full h-full"
-            src={imageUrl}
+        {data.image && (
+          <ImageWithFallback
+            imageUrl={imageUrl}
+            fallbackUrl="/not-found.jpg"
             alt="Image"
           />
-        ) : (
-          <div className="bg-neutral-400/5 w-full h-full">
-            <SoundCloudLogo />
-          </div>
         )}
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">
