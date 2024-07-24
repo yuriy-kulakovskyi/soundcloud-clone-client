@@ -4,6 +4,7 @@ import { getUserWithoutToken } from "@/app/lib/data";
 import { Song } from "@/app/lib/definitions";
 import { useEffect, useState } from "react";
 import PlayButton from "./play-button";
+import SoundCloudLogo from "../soundcloud-logo";
 
 interface SongItemProps {
   data: Song;
@@ -61,12 +62,16 @@ const SongItem: React.FC<SongItemProps> = ({
           overflow-hidden
         "
       >
-        {data.image && (
+        {data.image ? (
           <img
             className="object-cover absolute w-full h-full"
             src={imageUrl}
             alt="Image"
           />
+        ) : (
+          <div className="bg-neutral-400/5 w-full h-full">
+            <SoundCloudLogo />
+          </div>
         )}
       </div>
       <div className="flex flex-col items-start w-full pt-4 gap-y-1">

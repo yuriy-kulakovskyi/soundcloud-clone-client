@@ -2,6 +2,7 @@
 
 import { Song } from "@/app/lib/definitions";
 import usePlayer from "@/hooks/usePlayer";
+import SoundCloudLogo from "../soundcloud-logo";
 
 interface MediaItemProps {
   data: Song;
@@ -46,11 +47,17 @@ const MediaItem: React.FC<MediaItemProps> = ({
           overflow-hidden
         "
       >
-        <img
-          src={imageUrl}
-          alt="Media item"
-          className="object-cover absolute w-full h-full"
-        />
+        {data.image ? (
+          <img
+            src={imageUrl}
+            alt="Media item"
+            className="object-cover absolute w-full h-full"
+          />
+        ) : (
+          <div className="bg-neutral-400/5 w-full h-full">
+            <SoundCloudLogo />
+          </div>
+        )}
       </div>
       <div className="flex flex-col gap-y-1 overflow-hidden">
         <p className="text-white truncate">
